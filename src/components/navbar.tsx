@@ -67,6 +67,14 @@ const menu = [
     href: '/cloud-cli'
   },
   {
+    title: 'agents-cli',
+    href: '/agents-cli'
+  },
+  {
+    title: 'sandbox-cli',
+    href: '/sandbox-cli'
+  },
+  {
     title: 'about',
     href: '/abouts/overview'
   },
