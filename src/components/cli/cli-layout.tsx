@@ -5,9 +5,14 @@ import { signIn, signOut, useSession } from 'next-auth/react'
 import { useCLIStore } from '@/lib/cli/store'
 import { PaneTree } from './pane-tree'
 import { TerminalPane } from './terminal-pane'
+import { AuthPrompt } from './auth-prompt'
 import { GitHubService } from '@/lib/cli/github-service'
 
-export function CLILayout() {
+interface CLILayoutProps {
+  accessToken?: string
+}
+
+export function CLILayout({ accessToken: propToken }: CLILayoutProps) {
   const { data: session, status } = useSession()
   const { 
     panes, 
@@ -25,7 +30,7 @@ export function CLILayout() {
   useEffect(() => {
     if (session?.user && status === 'authenticated') {
       // Fetch full user data
-      const token = (session as { accessToken?: string }).accessToken
+      const token = propToken || (session as { accessToken?: string }).accessToken
       if (token) {
         setToken(token)
         const github = new GitHubService(token)
@@ -35,7 +40,7 @@ export function CLILayout() {
       setUser(null)
       setToken(null)
     }
-  }, [session, status, setUser, setToken])
+  }, [session, status, setUser, setToken, propToken])
 
   // Keyboard shortcuts
   const handleKeyDown = useCallback((e: KeyboardEvent) => {

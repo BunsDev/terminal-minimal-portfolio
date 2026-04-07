@@ -63,6 +63,10 @@ const menu = [
     href: '/'
   },
   {
+    title: 'cloud-cli',
+    href: '/cloud-cli'
+  },
+  {
     title: 'abouts',
     href: '/abouts/personal'
   },

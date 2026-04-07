@@ -34,7 +34,8 @@
     "remark-gfm": "^4.0.0",
     "sharp": "^0.33.5",
     "shiki": "^1.26.2",
-    "zustand": "^5.0.12"
+    "zustand": "^5.0.12",
+    "immer": "^10.0.4"
   },
   "devDependencies": {
     "@faker-js/faker": "^9.3.0",

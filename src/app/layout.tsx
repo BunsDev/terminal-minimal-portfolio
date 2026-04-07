@@ -7,6 +7,7 @@ import { GeistSans } from 'geist/font/sans'
 import { Navbar } from '@/components/navbar'
 import { Container } from '@/components/container'
 import { ResponsiveIndicator } from '@/components/responsive-indicator'
+import { Providers } from '@/components/providers'
 
 import { ENV } from '@/lib/constants'
 import { Particles } from '@/components/particles'
@@ -56,15 +57,17 @@ export default async function RootLayout({ children }: Readonly<Props>) {
   return (
     <html lang='en'>
       <body className={`${GeistSans.variable} ${GeistMono.variable} grid h-dvh place-items-center bg-[#3D3D3D] font-mono overflow-hidden`}>
-        <Container>
-          <section className='relative flex-1 overflow-y-auto px-2 md:px-3 lg:px-4'>{children}</section>
-          <Navbar />
-        </Container>
-        <Particles />
-        <ResponsiveIndicator />
-        <div className='fixed h-[300%] w-[300%] bg-grain-noise opacity-5 animate-grain pointer-events-none top-0' aria-hidden='true' />
-        <div className='bg-grid-pattern absolute left-0 top-0 h-full w-full' />
-        {process.env.NODE_ENV === 'production' && <Script defer src='https://umami.wiscaksono.com/script.js' data-website-id='1f3b0505-7366-47bd-8757-95ad25395088' />}
+        <Providers>
+          <Container>
+            <section className='relative flex-1 overflow-y-auto px-2 md:px-3 lg:px-4'>{children}</section>
+            <Navbar />
+          </Container>
+          <Particles />
+          <ResponsiveIndicator />
+          <div className='fixed h-[300%] w-[300%] bg-grain-noise opacity-5 animate-grain pointer-events-none top-0' aria-hidden='true' />
+          <div className='bg-grid-pattern absolute left-0 top-0 h-full w-full' />
+          {process.env.NODE_ENV === 'production' && <Script defer src='https://umami.wiscaksono.com/script.js' data-website-id='1f3b0505-7366-47bd-8757-95ad25395088' />}
+        </Providers>
       </body>
     </html>
   )
