@@ -1,0 +1,60 @@
+---
+title: "sandbox.ts"
+summary: "The Vercel Sandbox provides a secure, isolated environment for running OpenClaw with snapshot/restore capabilities, egress firewall control, and automatic wake-up scheduling."
+---
+
+```ts
+/**
+ * Vercel Sandbox Environment
+ * Secure isolation with powerful state management
+ */
+
+// Sandbox Benefits
+const benefits = {
+  isolation: 'Complete process isolation from other workloads',
+  persistence: 'Snapshot and restore entire sandbox state',
+  security: 'Egress firewall to control outbound connections',
+  performance: 'Fast cold starts with snapshot restoration',
+  scheduling: 'Auto-wake for scheduled jobs via cron'
+};
+
+// Snapshot & Restore
+class SandboxManager {
+  // Save current state
+  async createSnapshot(): Promise<SnapshotId> {
+    // Captures entire sandbox state
+    // Including installed packages, configs, data
+  }
+
+  // Roll back to previous state
+  async restoreSnapshot(id: SnapshotId): Promise<void> {
+    // Restores in seconds vs minutes for fresh boot
+  }
+
+  // List available snapshots
+  async listSnapshots(): Promise<Snapshot[]> {
+    // Browse historical states
+  }
+}
+
+// Egress Firewall
+interface EgressRule {
+  domain: string;
+  allowed: boolean;
+  reason?: string;
+}
+
+const firewallConfig = {
+  mode: 'learn' | 'enforce',
+  learn: 'Discover which domains agent communicates with',
+  enforce: 'Lock down to only approved domains'
+};
+
+// Resource Configuration
+const resources = {
+  vCPU: 'Configurable via environment variable',
+  memory: 'Scales with workload',
+  sleepTimeout: 'Customizable inactivity period',
+  versionPinning: 'Lock to specific OpenClaw version'
+};
+```

@@ -1,0 +1,71 @@
+---
+title: "architecture.ts"
+summary: "The technical stack powering the OpenClaw instance - built with Next.js, Vercel Sandbox, AI Gateway, Upstash Redis, Workflows, Queues, and Cron jobs for a complete serverless AI deployment."
+---
+
+```ts
+/**
+ * OpenClaw Architecture
+ * Built with modern serverless technologies
+ */
+
+interface Technology {
+  name: string;
+  role: string;
+  description?: string;
+}
+
+const stack: Technology[] = [
+  {
+    name: 'Next.js',
+    role: 'App Framework',
+    description: 'Server components, API routes, and middleware'
+  },
+  {
+    name: 'Vercel Sandbox',
+    role: 'Runtime Environment',
+    description: 'Isolated container for OpenClaw (create, snapshot, restore)'
+  },
+  {
+    name: 'Vercel AI Gateway',
+    role: 'Model Access',
+    description: 'OIDC-authenticated access to AI models'
+  },
+  {
+    name: 'Upstash Redis',
+    role: 'Persistent State',
+    description: 'Metadata, snapshots, and channel configuration'
+  },
+  {
+    name: 'Vercel Workflow',
+    role: 'Durable Delivery',
+    description: 'Reliable Slack and Telegram message delivery'
+  },
+  {
+    name: 'Vercel Queues',
+    role: 'Verification',
+    description: 'Launch verification probe delivery'
+  },
+  {
+    name: 'Vercel Cron',
+    role: 'Automation',
+    description: 'Watchdog health checks and scheduled wake'
+  }
+];
+
+// Sandbox Lifecycle States
+type SandboxState = 
+  | 'creating'
+  | 'running'
+  | 'sleeping'
+  | 'restoring'
+  | 'snapshotting';
+
+// Security Model
+const security = {
+  authentication: 'ADMIN_SECRET password protection',
+  isolation: 'Sandboxed container environment',
+  egress: 'Configurable firewall rules',
+  oidc: 'Vercel OIDC for AI Gateway auth'
+};
+```

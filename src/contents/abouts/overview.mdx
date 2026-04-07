@@ -1,0 +1,41 @@
+---
+title: "overview.ts"
+summary: "OpenClaw is a personal AI agent instance running in a Vercel Sandbox - a secure, isolated environment with full control plane capabilities including auth, snapshots, and channel integrations."
+---
+
+```ts
+/**
+ * OpenClaw on Vercel Sandbox
+ * A personal AI agent instance with full control plane
+ */
+
+const PROJECT_NAME = 'OpenClaw Instance';
+const ENVIRONMENT = 'Vercel Sandbox';
+const STATUS = 'Research Preview';
+
+// What is this?
+const description = `
+  A Next.js app that wraps OpenClaw in a full control plane
+  — auth, snapshots, channel integrations, and an egress firewall —
+  running inside a secure Vercel Sandbox environment.
+`;
+
+// Key Features
+const features = [
+  'Full OpenClaw UI proxied at /gateway with auth',
+  'Snapshot & restore sandbox state',
+  'Slack & Telegram channel integrations',
+  'Egress firewall for domain control',
+  'Auto-wake via cron watchdog',
+  'WebSocket rewriting support'
+];
+
+// Quick Start
+const gettingStarted = {
+  step1: 'Deploy with one-click button',
+  step2: 'Set ADMIN_SECRET password',
+  step3: 'Sign in and visit /gateway',
+  step4: 'First boot takes ~1 minute',
+  step5: 'Subsequent restores take seconds'
+};
+```

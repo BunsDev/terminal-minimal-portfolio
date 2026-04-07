@@ -1,0 +1,64 @@
+---
+title: "channels.ts"
+summary: "Connect your OpenClaw instance to Slack and Telegram for seamless chat interactions. Features durable message delivery via Vercel Workflows and comprehensive readiness verification."
+---
+
+```ts
+/**
+ * Channel Integrations
+ * Connect OpenClaw to your favorite platforms
+ */
+
+// Supported Channels
+const channels = ['Slack', 'Telegram'] as const;
+type Channel = typeof channels[number];
+
+// Slack Integration
+interface SlackConfig {
+  SLACK_CLIENT_ID: string;
+  SLACK_CLIENT_SECRET: string;
+  SLACK_SIGNING_SECRET: string;
+  features: [
+    'One-click OAuth install',
+    'Manual credential entry',
+    'Durable message delivery',
+    'Webhook verification'
+  ];
+}
+
+// Telegram Integration
+interface TelegramConfig {
+  botToken: string;
+  features: [
+    'Bot API integration',
+    'Webhook-based delivery',
+    'Durable message retry'
+  ];
+}
+
+// Channel Readiness
+interface ChannelReadiness {
+  ready: boolean;
+  checks: {
+    preflight: 'Config readiness check',
+    launchVerification: 'Destructive runtime verification',
+    webhookDelivery: 'End-to-end message test'
+  };
+}
+
+// Verification Flow
+const verificationSteps = [
+  '1. Run preflight check from admin panel',
+  '2. Execute destructive launch verification',
+  '3. Confirm channelReadiness.ready === true',
+  '4. Connect channels safely'
+];
+
+// Durable Delivery via Vercel Workflow
+const deliveryGuarantees = {
+  retries: 'Automatic retry on failure',
+  ordering: 'Message ordering preserved',
+  durability: 'Survives sandbox restarts',
+  monitoring: 'Delivery status tracking'
+};
+```
