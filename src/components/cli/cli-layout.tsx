@@ -1,11 +1,10 @@
 'use client'
 
-import { useEffect, useCallback } from 'react'
-import { signIn, signOut, useSession } from 'next-auth/react'
+import { useEffect, useCallback, useState } from 'react'
+import { signOut, useSession } from 'next-auth/react'
 import { useCLIStore } from '@/lib/cli/store'
 import { PaneTree } from './pane-tree'
 import { TerminalPane } from './terminal-pane'
-import { AuthPrompt } from './auth-prompt'
 import { GitHubService } from '@/lib/cli/github-service'
 
 interface CLILayoutProps {
@@ -14,6 +13,7 @@ interface CLILayoutProps {
 
 export function CLILayout({ accessToken: propToken }: CLILayoutProps) {
   const { data: session, status } = useSession()
+  const [isSigningIn, setIsSigningIn] = useState(false)
   const { 
     panes, 
     activePaneId, 
@@ -128,13 +128,17 @@ export function CLILayout({ accessToken: propToken }: CLILayoutProps) {
               </button>
             </div>
           ) : (
-            <button
-              onClick={() => signIn('github')}
-              className="flex items-center gap-2 px-3 py-1.5 bg-[#1a1a1a] hover:bg-[#252525] border border-[#2a2a2a] rounded text-sm text-[#e0e0e0] transition-colors"
-            >
-              <GitHubIcon className="w-4 h-4" />
-              Sign in with GitHub
-            </button>
+            <form action="/api/auth/signin/github" method="POST">
+              <button
+                type="submit"
+                disabled={isSigningIn}
+                onClick={() => setIsSigningIn(true)}
+                className="flex items-center gap-2 px-3 py-1.5 bg-[#1a1a1a] hover:bg-[#252525] border border-[#2a2a2a] rounded text-sm text-[#e0e0e0] transition-colors disabled:opacity-50"
+              >
+                <GitHubIcon className="w-4 h-4" />
+                {isSigningIn ? 'Signing in...' : 'Sign in with GitHub'}
+              </button>
+            </form>
           )}
         </div>
       </div>

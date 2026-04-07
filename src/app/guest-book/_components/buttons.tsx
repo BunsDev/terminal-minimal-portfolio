@@ -1,7 +1,6 @@
 'use client'
-import { useOptimistic, useTransition } from 'react'
+import { useOptimistic, useTransition, useState } from 'react'
 import { useFormStatus } from 'react-dom'
-import { signIn } from 'next-auth/react'
 
 import { deletePost, likePost, unlikePost } from '@/lib/actions'
 import { GitHub, Loading, Close, Heart } from '@/components/icons'
@@ -9,16 +8,21 @@ import { GitHub, Loading, Close, Heart } from '@/components/icons'
 interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {}
 
 export const SignIn = (props: Props) => {
+  const [isSigningIn, setIsSigningIn] = useState(false)
+  
   return (
-    <button
-      type='button'
-      onClick={() => signIn('github')}
-      className='flex lg:w-[160px] w-full items-center justify-center gap-2 bg-[#898989] px-2 py-0.5 text-[#131313]'
-      {...props}
-    >
-      <GitHub />
-      SignIn
-    </button>
+    <form action="/api/auth/signin/github" method="POST">
+      <button
+        type='submit'
+        disabled={isSigningIn}
+        onClick={() => setIsSigningIn(true)}
+        className='flex lg:w-[160px] w-full items-center justify-center gap-2 bg-[#898989] px-2 py-0.5 text-[#131313] disabled:opacity-50'
+        {...props}
+      >
+        <GitHub />
+        {isSigningIn ? 'Loading...' : 'SignIn'}
+      </button>
+    </form>
   )
 }
 

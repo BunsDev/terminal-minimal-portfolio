@@ -5,19 +5,45 @@ import { createPost } from '@/lib/actions'
 import { SignIn, Delete, Submit, Like } from './_components/buttons'
 import { unstable_cache } from 'next/cache'
 
-const getPosts = unstable_cache(
-  () => {
-    return db.post.findMany({
+type Post = {
+  id: number
+  desc: string
+  createdAt: Date
+  user: { id: string; name: string }
+  like: { user: { id: string } }[]
+  _count: { like: number }
+}
+
+const getPosts = async (): Promise<Post[]> => {
+  try {
+    // Check if database is configured
+    if (!process.env.POSTGRES_PRISMA_URL) {
+      return []
+    }
+    return await db.post.findMany({
       include: { user: true, like: { select: { user: { select: { id: true } } } }, _count: { select: { like: true } } },
       orderBy: { createdAt: 'desc' }
     })
-  },
-  ['posts'],
-  { revalidate: 3600, tags: ['posts'] }
-)
+  } catch (error) {
+    console.error('Failed to fetch posts:', error)
+    return []
+  }
+}
 
 export default async function GuestBook() {
-  const [posts, session] = await Promise.all([getPosts(), auth()]) // feels like not cached because of the session
+  const [posts, session] = await Promise.all([getPosts(), auth()])
+  const isDatabaseConfigured = !!process.env.POSTGRES_PRISMA_URL
+
+  if (!isDatabaseConfigured) {
+    return (
+      <div className="flex flex-col items-center justify-center py-12 text-center">
+        <p className="text-[#898989] mb-2">Database not configured</p>
+        <p className="text-sm text-[#606060]">
+          Set the POSTGRES_PRISMA_URL environment variable to enable the guest book.
+        </p>
+      </div>
+    )
+  }
 
   return (
     <>
