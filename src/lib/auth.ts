@@ -2,7 +2,7 @@ import { cache } from 'react'
 import NextAuth from 'next-auth'
 import GitHub from 'next-auth/providers/github'
 import { PrismaAdapter } from '@auth/prisma-adapter'
-import { DefaultSession } from 'next-auth'
+import { DefaultSession, Account } from 'next-auth'
 
 import { ENV } from './constants'
 import { db } from './prisma'
@@ -36,25 +36,24 @@ const {
     })
   ],
   callbacks: {
-    jwt: async ({ token, account }) => {
-      if (account) {
-        token.accessToken = account.access_token
-      }
-      return token
-    },
-    session: async ({ session, token, user }) => {
+    session: async ({ session, user }) => {
+      // Fetch access token from the account table
+      const account = await db.account.findFirst({
+        where: {
+          userId: user.id,
+          provider: 'github'
+        }
+      })
+      
       return {
         ...session,
         user: {
           ...session.user,
-          id: user?.id || token?.sub
+          id: user.id
         },
-        accessToken: token?.accessToken as string | undefined
+        accessToken: account?.access_token ?? undefined
       }
     }
-  },
-  session: {
-    strategy: 'jwt'
   },
   pages: {
     error: '/'
