@@ -1,0 +1,144 @@
+```ts
+// AI Agent System
+// Multi-agent architecture for intelligent task routing
+
+interface AgentSystem {
+  name: "OpenClaw AI Agents"
+  version: "1.0.0"
+  architecture: "Multi-Agent Orchestration"
+  inspiration: "knowledge-agent-template"
+}
+
+// Core Design Principles
+const principles = {
+  fileBasedSearch: "No embeddings, no vector DB - uses grep, find, cat",
+  smartRouting: "Complexity-based model selection",
+  modular: "Specialized agents with clear responsibilities",
+  scalable: "Easy to add new agents and capabilities"
+}
+```
+
+## Agent Roster
+
+```ts
+// Orchestrator Agent - Central Coordinator
+const orchestrator = {
+  id: "orchestrator-agent",
+  role: "Task routing & workflow coordination",
+  capabilities: [
+    "Complexity classification",
+    "Multi-agent coordination", 
+    "Result synthesis",
+    "Fallback handling"
+  ],
+  models: {
+    trivial: "gpt-4o-mini",
+    complex: "gpt-4o",
+    expert: "claude-opus-4.6"
+  }
+}
+
+// GitHub Agent - Repository Operations
+const githubAgent = {
+  id: "github-agent",
+  role: "GitHub API specialist",
+  capabilities: [
+    "Repository management",
+    "Issue tracking",
+    "Pull request workflows",
+    "Release management",
+    "Organization operations"
+  ],
+  tools: ["list_repos", "create_issue", "merge_pr", "trigger_workflow"]
+}
+
+// Codebase Agent - Code Analysis
+const codebaseAgent = {
+  id: "codebase-agent",
+  role: "File-based code search & analysis",
+  capabilities: [
+    "Pattern matching with grep",
+    "File discovery with find",
+    "Code reading with cat",
+    "Structure analysis",
+    "Dependency tracking"
+  ],
+  approach: "Deterministic, explainable file search in sandboxes"
+}
+
+// DevOps Agent - CI/CD & Infrastructure
+const devopsAgent = {
+  id: "devops-agent",
+  role: "CI/CD pipeline specialist",
+  capabilities: [
+    "GitHub Actions workflows",
+    "Vercel deployments",
+    "Environment management",
+    "Secret handling",
+    "Pipeline optimization"
+  ],
+  bestPractices: ["Caching", "Matrix builds", "Parallel jobs"]
+}
+```
+
+## Smart Routing
+
+```ts
+// Complexity-based model routing
+type ComplexityLevel = 
+  | "trivial"   // Simple lookups → fast models
+  | "simple"    // Single operations
+  | "moderate"  // Multi-step tasks
+  | "complex"   // Analysis & planning → powerful models  
+  | "expert"    // Architecture decisions → best models
+
+// Automatic classification based on:
+const routingFactors = [
+  "Query length and structure",
+  "Keywords (create, analyze, optimize)",
+  "Domain detection (GitHub, code, deploy)",
+  "Multi-step indicators (and, then)"
+]
+```
+
+## Inter-Agent Communication
+
+```ts
+interface AgentRequest {
+  fromAgent: string
+  toAgent: string
+  type: "query" | "delegate" | "inform"
+  payload: {
+    task: string
+    context: Record<string, unknown>
+    priority: "low" | "normal" | "high"
+  }
+}
+
+// Example: Complex task delegation
+const workflow = {
+  task: "Review PR and update docs",
+  steps: [
+    { agent: "codebase", action: "Analyze changed files" },
+    { agent: "github", action: "Check PR status" },
+    { agent: "documentation", action: "Update docs" }
+  ]
+}
+```
+
+## Sandbox Execution
+
+```ts
+// Based on knowledge-agent-template patterns
+const sandboxConfig = {
+  type: "Vercel Sandbox",
+  features: [
+    "Isolated execution environment",
+    "Shared pool for fast startup (<100ms)",
+    "Read-only with blocked dangerous commands",
+    "Pre-built snapshots for quick recovery"
+  ],
+  allowedCommands: ["grep", "find", "cat", "tree", "wc"],
+  blockedCommands: ["rm", "mv", "chmod", "sudo"]
+}
+```
